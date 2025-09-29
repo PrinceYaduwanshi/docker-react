@@ -1,0 +1,19 @@
+version: '3'
+services: 
+  web: #1st container
+    build: 
+      context: . #from where to pull all the files and folders for the image
+      dockerfile: Dockerfile.dev  #location of docker file which will be used to build the image
+    ports: 
+      - "3000:3000"
+    volumes:
+      - /app/node_modules
+      - .:/app
+  tests:
+    build: #2nd container
+      context: . #from where to pull all the files and folders for the image
+      dockerfile: Dockerfile.dev  #location of docker file which will be used to build the image
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "test"]
